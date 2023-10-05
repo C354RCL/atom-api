@@ -34,7 +34,6 @@ app.use('/user', user);
 
 //Middleware de autentificacion
 app.use(express.static('public'));
-app.use(auth);
 
 
 //Ruta protegida

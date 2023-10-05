@@ -18,7 +18,7 @@ login.post('/', async(req, res, next) => {
         return res.status(201).json({code : 201, message : 'No se pudo registrar el usuario'});
     }
     
-    return res.status(201).json({code : 201, message : 'Usario registrado correctamente'});
+    return res.status(200).json({code : 200, message : 'Usario registrado correctamente'});
     
 });
 

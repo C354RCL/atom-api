@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-09-2023 a las 01:44:35
+-- Tiempo de generación: 28-09-2023 a las 22:07:17
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `categories` (
-  `categoryId` int(11) NOT NULL,
+  `categoryId` int(11) NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -48,7 +48,7 @@ INSERT INTO `categories` (`categoryId`, `categoryName`) VALUES
 --
 
 CREATE TABLE `habits` (
-  `habitId` int(11) NOT NULL,
+  `habitId` int(11) NOT NULL AUTO_INCREMENT,
   `icon` blob NOT NULL,
   `habitName` varchar(30) NOT NULL,
   `descripiton` varchar(100) NOT NULL,
@@ -73,7 +73,7 @@ INSERT INTO `habits` (`habitId`, `icon`, `habitName`, `descripiton`, `categoryId
 --
 
 CREATE TABLE `users` (
-  `userId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
   `passwd` varchar(50) NOT NULL
@@ -93,9 +93,9 @@ INSERT INTO `users` (`userId`, `userName`, `email`, `passwd`) VALUES
 --
 
 CREATE TABLE `usershabits` (
-  `uhId` int(11) NOT NULL,
-  `timesDone` int(11) NOT NULL,
-  `completed` tinyint(1) NOT NULL,
+  `uhId` int(11) NOT NULL AUTO_INCREMENT,
+  `timesDone` int(11) NOT NULL DEFAULT 0,
+  `completed` tinyint(1) NOT NULL DEFAULT 0,
   `userId` int(11) DEFAULT NULL,
   `habitId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -105,8 +105,9 @@ CREATE TABLE `usershabits` (
 --
 
 INSERT INTO `usershabits` (`uhId`, `timesDone`, `completed`, `userId`, `habitId`) VALUES
-(0, 0, 0, 0, 2),
-(1, 0, 0, 0, 1);
+(0, 0, 0, 1, 2),
+(1, 0, 0, 1, 1),
+(2, 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 

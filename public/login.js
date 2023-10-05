@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function(){
         //Enviamos los datos obtenidos
         axios({
             method : 'post',
-            url : 'http://localhost:3000/register',
+            url : 'http://localhost:3000/login',
             data : {
                 userName,
                 email,
