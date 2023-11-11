@@ -3,10 +3,11 @@ const main = express.Router();
 const db = require('../config/database');
 
 // Obtener todos los habitos del usuario
-main.get('/', async(req, res, next) => {
+main.get('/', async(req, res) => {
     try {
         // Obtenemos los datos de la peticion
         const {userName} = req.body;
+        console.log(userName)
 
         // Consulta para comprobar si el usuario existe
         const userExistQuery = `SELECT userId FROM users WHERE userName = ?;`;
@@ -18,11 +19,11 @@ main.get('/', async(req, res, next) => {
         }
     
         // Hacemos la consulta a la base de datos
-        const userHabits = await db.query(`SELECT * FROM view_users_habits WHERE userId = (SELECT userId FROM users WHERE userName = '${userName}');`);
+        const userHabits = await db.query(`SELECT * FROM view_users_habits WHERE completed = 0 AND userId = (SELECT userId FROM users WHERE userName = '${userName}');`);
         
         // Verificamos si tiene más de un habito agregado
         if(userHabits.length === 0){
-            res.status(404).json({code : 404, message : 'No tienes habitos guardados'});
+            return res.status(404).json({code : 404, message : 'No tienes habitos guardados'});
         }
         
         // Retornamos los habitos del usuario

@@ -1,11 +1,10 @@
-//Ruta a la que se le envian los datos de inicio de sesion y comprueba si son correctos
 const express = require('express');
 const signin = express.Router();
 const db = require('../config/database');
 const jwt = require('jsonwebtoken');
 
 // Iniciar sesion
-signin.post('/', async(req, res, next) => {
+signin.post('/', async(req, res) => {
     try {
         // Obtenemos los datos que vienen del cuerpo de la peticion
         const {userName, passwd} = req.body;

@@ -3,7 +3,7 @@ const user = express.Router();
 const db = require('../config/database');
 
 // Obtener los datos del usuario
-user.get('/', async(req, res, next) => {
+user.get('/', async(req, res) => {
     try {
         // Obtenemos los datos del cuerpo de la peticion
         const userName = req.body.userName;

@@ -3,7 +3,7 @@ const login = express.Router();
 const db = require('../config/database');
 
 // Agregar un nuevo usuario a la base de datos
-login.post('/', async(req, res, next) => {
+login.post('/', async(req, res) => {
     try {
         //Obtenemos los valores del cuerpo de la peticion
         const {userName, email, passwd} = req.body;

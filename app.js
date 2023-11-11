@@ -3,14 +3,15 @@ const express = require("express");
 const app = express();
 const auth = require("./middleware/auth");
 
-//rutas
+// rutas
 const signin = require("./routes/signin");
 const login = require("./routes/login");
 const main = require("./routes/main");
 const habits = require("./routes/habits");
+const habit = require('./routes/habit');
 const user = require("./routes/user");
 
-//middleware
+// middleware
 const cors = require("./middleware/cors");
 const notFound = require("./middleware/notFound");
 
@@ -20,11 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-//Demas rutas
+// Uso de rutas
 app.use("/login", login);
 app.use("/signin", signin);
 app.use("/main", main);
 app.use("/habits", habits);
+app.use("/habit", habit);
 app.use("/user", user);
 
 //Middleware de autentificacion
