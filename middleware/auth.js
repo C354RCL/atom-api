@@ -1,6 +1,5 @@
 //Importamos la libreria
 const jwt = require('jsonwebtoken');
-const path = require('path');
 
 //Creamos el modulo a exportar
 module.exports = (req, res, next) => {
@@ -9,10 +8,6 @@ module.exports = (req, res, next) => {
 
     // Verificamos si se proporciona un token
     if (!token) {
-        //Creamos la ruta principal
-        const completeRoute = path.join(__dirname, '../public/index.html');
-        //Enviamos el archivo principal
-        res.sendFile(completeRoute);
         return res.status(401).json({ error: 'Autenticación fallida: Token no proporcionado' });
     }
 
@@ -28,9 +23,5 @@ module.exports = (req, res, next) => {
     } catch (error) {
         // Manejo de errores si el token no es válido
         res.status(401).json({ error: 'Autenticación fallida: Token no válido' });
-        //Creamos la ruta principal
-        const completeRoute = path.join(__dirname, '../public/index.html');
-        //Enviamos el archivo principal
-        res.sendFile(completeRoute);
     }
 }
