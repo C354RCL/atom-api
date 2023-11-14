@@ -2,11 +2,21 @@ const express = require('express');
 const habits = express.Router();
 const db = require('../config/database');
 
-// Obtener todos los habitos
+// Obtener todos los habitos que no tenga agregado el usuario
 habits.get('/', async(req, res) => {
     try{
+        // Obtenemos el nombre del usuario
+        const userName = req.body.userName;
+        let query = `SELECT h.*
+        FROM habits h
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM usershabits uh
+            JOIN users u ON uh.userId = u.userId
+            WHERE uh.habitId = h.habitId AND u.userName = '${userName}'
+        );`
         //Creamos la consulta para obtener todos los habitos
-        const allHabits = await db.query("SELECT h.icon, h.habitName, h.description, c.categoryName FROM habits h JOIN categories c ON h.categoryId = c.categoryId;");
+        const allHabits = await db.query(query);
         //Enviamos los resultados al cliente
         return res.status(200).json(allHabits);
     } catch {
@@ -37,7 +47,6 @@ habits.get('/completed', async(req, res) => {
     try{
         // Obtenemos el id del cuerpo de la peticion
         const userName = req.body.userName;
-        console.log(userName)
         // Creamos la consulta
         let query = `SELECT h.habitName, c.categoryName, uh.timesDone
         FROM usershabits uh
