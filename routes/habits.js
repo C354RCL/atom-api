@@ -6,7 +6,7 @@ const db = require('../config/database');
 habits.get('/', async(req, res) => {
     try{
         // Obtenemos el nombre del usuario
-        const userName = req.body.userName;
+        const userName = req.query.userName;
         let query = `SELECT h.*
         FROM habits h
         WHERE NOT EXISTS (
@@ -24,19 +24,15 @@ habits.get('/', async(req, res) => {
     }
 });
 
-// Obtener un habito especifico por medio del id enviado
-habits.get('/:id([0-9]{1,3})',async(req, res) => {
-    try{
-        // Obtenemos el id del cuerpo de la peticion
-        const id = req.params.id;
-        // Creamos la consulta 
-        const habit = await db.query(`SELECT icon, habitName, description FROM habits WHERE habitId = ${id};`);
-        // Comporbamos si hay un habito con el id enviado 
-        habit.length > 0 ? 
+habits.get('/info/', async(req, res) => {
+    try {
+        const habitId = req.query.habitId;
+        const habit = await db.query(`SELECT icon, habitName, description FROM habits WHERE habitId = ${habitId}`);
         //Enviamos el habito si es que existe
+        habit.length > 0 ? 
         res.status(200).json(habit) 
         //Enviamos un error si es que no existe
-        : res.status(404).json({code : 404, message : `Error al conseguir el habito con id : ${id}`})
+        : res.status(404).json({code : 404, message : `Error al conseguir el habito`});
     } catch {
         res.status(201).json({code : 201, message : `Error en la ruta`});
     }
@@ -46,7 +42,7 @@ habits.get('/:id([0-9]{1,3})',async(req, res) => {
 habits.get('/completed', async(req, res) => {
     try{
         // Obtenemos el id del cuerpo de la peticion
-        const userName = req.body.userName;
+        const userName = req.query.userName;
         // Creamos la consulta
         let query = `SELECT h.habitName, c.categoryName, uh.timesDone
         FROM usershabits uh

@@ -6,7 +6,7 @@ const db = require('../config/database');
 user.get('/', async(req, res) => {
     try {
         // Obtenemos los datos del cuerpo de la peticion
-        const userName = req.body.userName;
+        const userName = req.query.userName;
     
         // Hacemos la consulta a la base de datos
         const userInfo = await db.query(`SELECT userName, email FROM users WHERE userName = '${userName}';`);

@@ -7,6 +7,10 @@ login.post('/', async(req, res) => {
     try {
         //Obtenemos los valores del cuerpo de la peticion
         const {userName, email, passwd} = req.body;
+
+        if(!userName|| !email|| !passwd) {
+            return res.status(404).json({code : 404, message : 'No puede haber campos vacios'});
+        }
     
         //Hacemos la consulta
         let query = `INSERT INTO users (userName, email, passwd) VALUES ('${userName}', '${email}', '${passwd}');`;

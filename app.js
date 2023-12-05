@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 // Uso de rutas
 app.use("/login", login);
 app.use("/signin", signin);
-app.use(auth);
+// app.use(auth);
 app.use("/main", main);
 app.use("/habits", habits);
 app.use("/habit", habit);

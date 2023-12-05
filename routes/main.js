@@ -6,7 +6,7 @@ const db = require('../config/database');
 main.get('/', async(req, res) => {
     try {
         // Obtenemos los datos de la peticion
-        const {userName} = req.body;
+        const userName = req.query.userName;
         console.log(userName)
 
         // Consulta para comprobar si el usuario existe
@@ -19,7 +19,7 @@ main.get('/', async(req, res) => {
         }
     
         // Hacemos la consulta a la base de datos
-        const userHabits = await db.query(`SELECT * FROM view_users_habits WHERE completed = 0 AND userId = (SELECT userId FROM users WHERE userName = '${userName}');`);
+        const userHabits = await db.query(`SELECT habitId, habitName, timesDone FROM view_users_habits WHERE completed = 0 AND userId = (SELECT userId FROM users WHERE userName = '${userName}');`);
         
         // Verificamos si tiene más de un habito agregado
         if(userHabits.length === 0){
@@ -29,7 +29,7 @@ main.get('/', async(req, res) => {
         // Retornamos los habitos del usuario
         return res.status(200).json(userHabits);
     } catch {
-        return res.status(404).json({code : 404, message : 'Error, intentelo más tarde'})
+        return res.status(500).json({code : 404, message : 'Error, intentelo más tarde'})
     }
 });
 
