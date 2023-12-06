@@ -27,7 +27,7 @@ habits.get('/', async(req, res) => {
 habits.get('/info/', async(req, res) => {
     try {
         const habitId = req.query.habitId;
-        const habit = await db.query(`SELECT icon, habitName, description FROM habits WHERE habitId = ${habitId}`);
+        const habit = await db.query(`SELECT icon, habitId, habitName, description FROM habits WHERE habitId = ${habitId}`);
         //Enviamos el habito si es que existe
         habit.length > 0 ? 
         res.status(200).json(habit) 
@@ -44,7 +44,7 @@ habits.get('/completed', async(req, res) => {
         // Obtenemos el id del cuerpo de la peticion
         const userName = req.query.userName;
         // Creamos la consulta
-        let query = `SELECT h.habitName, c.categoryName, uh.timesDone
+        let query = `SELECT h.icon h.habitId, h.habitName, c.categoryName, uh.timesDone
         FROM usershabits uh
         JOIN habits h ON uh.habitId = h.habitId
         JOIN users u ON uh.userId = u.userId

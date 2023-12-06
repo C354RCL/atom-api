@@ -19,7 +19,7 @@ main.get('/', async(req, res) => {
         }
     
         // Hacemos la consulta a la base de datos
-        const userHabits = await db.query(`SELECT habitId, habitName, timesDone FROM view_users_habits WHERE completed = 0 AND userId = (SELECT userId FROM users WHERE userName = '${userName}');`);
+        const userHabits = await db.query(`SELECT icon, habitId, habitName, timesDone FROM view_users_habits WHERE completed = 0 AND userId = (SELECT userId FROM users WHERE userName = '${userName}');`);
         
         // Verificamos si tiene más de un habito agregado
         if(userHabits.length === 0){
