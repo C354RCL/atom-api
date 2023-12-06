@@ -27,7 +27,7 @@ signin.post('/', async(req, res) => {
             return res.status(400).json({code : 400, message : 'Usuario y/o contraseña incorrectas'});
         }
     } catch {
-        return res.status(400).json({code : 400, message : 'Error en la ruta'});
+        return res.status(400).json({code : 400, message : 'Usuario y/o contraseña incorrectas'});
     }
 });
 
