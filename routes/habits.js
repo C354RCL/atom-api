@@ -7,8 +7,9 @@ habits.get('/', async(req, res) => {
     try{
         // Obtenemos el nombre del usuario
         const userName = req.query.userName;
-        let query = `SELECT h.*
+        let query = `SELECT h.*, c.categoryName
         FROM habits h
+        INNER JOIN categories c ON h.categoryId = c.categoryId
         WHERE NOT EXISTS (
             SELECT 1
             FROM usershabits uh
@@ -34,7 +35,7 @@ habits.get('/info/', async(req, res) => {
         //Enviamos un error si es que no existe
         : res.status(404).json({code : 404, message : `Error al conseguir el habito`});
     } catch {
-        res.status(201).json({code : 201, message : `Error en la ruta`});
+        res.status(404).json({code : 404, message : `Error en la ruta`});
     }
 });
 
@@ -43,8 +44,9 @@ habits.get('/completed', async(req, res) => {
     try{
         // Obtenemos el id del cuerpo de la peticion
         const userName = req.query.userName;
+        console.log(userName)
         // Creamos la consulta
-        let query = `SELECT h.icon h.habitId, h.habitName, c.categoryName, uh.timesDone
+        let query = `SELECT h.icon, h.habitId, h.habitName, c.categoryName, uh.timesDone
         FROM usershabits uh
         JOIN habits h ON uh.habitId = h.habitId
         JOIN users u ON uh.userId = u.userId
